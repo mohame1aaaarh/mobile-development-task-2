@@ -1,37 +1,30 @@
 # Mini Product Catalog
 
-تطبيق Flutter صغير فيه 3 شاشات: **Login → Products → Product Details**، مبني طبقاً لمتطلبات التاسك (Lifecycle / Navigator / go_router).
+A small Flutter app with three screens: Login, Products, and Product Details.
+Made for the Mobile Development course (Task 3).
 
-## الفكرة
-- تسجيل دخول (اسم المستخدم "Guest") يفتح صفحة المنتجات.
-- صفحة المنتجات فيها عداد Favorites، وكل منتج له قلب ويفتح صفحة التفاصيل.
-- صفحة التفاصيل فيها زر "Add to Cart" ويرجع رسالة تظهر على صفحة المنتجات.
-- شاشة المنتجات بتتغير من List إلى Grid لما عرض الشاشة يوصل 600 (MediaQuery).
+## Features
+- Login screen that opens the products page as "Guest"
+- Products page with a favorites counter and a heart button on each product
+- Layout switches between a list and a grid depending on screen width (600px)
+- Details page with an "Add to Cart" button that sends a message back to the products page
 
-## هيكل المشروع
+## Navigation
+Navigation is done with go_router. The old Navigator version is still in
+`main.dart`, commented out.
+
+| Route | Screen |
+|---|---|
+| `/` | Login |
+| `/products?user=Guest` | Products |
+| `/details/:name/:price` | Details |
+
+## Run
 ```
-lib/
-├── main.dart            ← التطبيق كامل (go_router شغال + نسخة Navigator معلقة)
-└── product_widgets.dart ← ملف المساعد المعطى بالتاسك (ListView / GridView جاهزين)
-```
-
-## Routes (go_router)
-| Route | الشاشة | ملاحظات |
-|---|---|---|
-| `/` | LoginPage | |
-| `/products?user=Guest` | ProductsPage | query parameter لاسم المستخدم |
-| `/details/:name/:price` | DetailsPage | path parameters الاسم والسعر |
-
-- Login → Products: `context.goNamed` (عشان مش يرجع للوجين).
-- Products → Details: `context.push` + `await` لاستلام النتيجة.
-- Details → خروج: `context.pop("... added to cart")`.
-
-## Lifecycle (Part 1)
-كل الصفحات Stateful وتعمل override للـ 5 methods مع print:
-`initState` / `didChangeDependencies` / `build` / `deactivate` / `dispose` — وتجربتها موجودة في الكونسول (لقطاتها مرفقة مع التسليم)، وإجابات أسئلة الجزء الأول والرابع في تعليق أعلى `main.dart`.
-
-## التشغيل
-```bash
 flutter pub get
-flutter run -d linux   # أو -d web-server لتجربة resize المتصفح
+flutter run -d linux
 ```
+
+## Notes
+- Answers to the lifecycle and go_router questions are in the comment at the top of `main.dart`.
+- `product_widgets.dart` is the helper file provided with the task.
